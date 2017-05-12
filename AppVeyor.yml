@@ -1,0 +1,37 @@
+#---------------------------------# 
+#      Environment configuration  # 
+#---------------------------------# 
+version: 1.0.{build}
+os: WMF 5
+
+install:
+  # Startet PSKursInstall.ps1
+  - ps: . .\AppVeyorScripts\PsKursInstall.ps1
+
+environment:
+  MySecureVar: 
+  MyNonSecureVar: NonSecure
+  ModuleName: PsKurs
+  ModuleVersion: 1.0
+
+#---------------------------------# 
+#      Build configuration        # 
+#---------------------------------# 
+build_script: 
+  # Startet Starte PSKursBuild.ps1
+  - ps: . .\AppVeyorScripts\PsKursBuild.ps1
+
+
+#---------------------------------# 
+#      Test configuration         # 
+#---------------------------------# 
+test_script: 
+  # Startet PsKursTest.ps1
+  - ps: . .\AppVeyorScripts\PsKursTest.ps1
+
+#---------------------------------# 
+#      Deployment configuration   # 
+#---------------------------------# 
+deploy_script: 
+  # Startet PsKursDeploy.ps1
+  - ps: . .\AppVeyorScripts\PsKursDeploy.ps1
