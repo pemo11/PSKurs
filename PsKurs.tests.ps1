@@ -3,7 +3,7 @@
  Tests for the PsKurs-Module
 #>
 
-describe "General Tests" {
+describe "Allgemeine Tests" {
 
     beforeAll {
         cd $PSScriptRoot
@@ -36,5 +36,15 @@ describe "General Tests" {
         $RuleVioalations = Invoke-ScriptAnalyzer -Path $Psm1Pfad -ExcludeRule "PSUseApprovedVerbs"
         @($RuleVioalations | Where-Object Severity -eq "Warning").Count -lt 3 | Should be $true
     }
+
+    it "Runden auf 3 Nachkommastellen" {
+        $Result = Runden ([Math]::PI) 3
+        $Result -eq 3.142 | should be $true
+    }
+
+    it "Runden mit Default-Nachkommastellen" {
+        $Result = Runden ([Math]::PI)
+        $Result -eq 3.14 | should be $true
+    } 
 
 }
