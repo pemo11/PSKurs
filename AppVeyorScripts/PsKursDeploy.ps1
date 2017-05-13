@@ -16,7 +16,8 @@ $ModuleParentPath = Split-Path -Path $Pwd
 Write-Host "$ModuleParentPath wird an die PSModulePath-Variablen angehaengt"
 $env:PSModulePath += ";$ModuleParentPath"
 
-$ModulePath = Join-Path -Path $Pwd -ChildPath $env:ModuleVersion
+$ModulePath = Join-Path -Path $Pwd -ChildPath "PsKursModul"
+$ModulePath = Join-Path -Path $ModulePath -ChildPath $env:ModuleVersion
 $Psm1Name = $env:ModuleName + ".psm1"
 $Psd1Name = $env:ModuleName + ".psd1"
 $Psm1Path = Join-Path -Path $ModulePath -ChildPath $Psm1Name
