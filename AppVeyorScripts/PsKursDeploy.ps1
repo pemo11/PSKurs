@@ -5,6 +5,8 @@
 Write-Host "Stufe 4: Das Deploy-Skript startet" -ForegroundColor Yellow
 Write-Host "Aktuelles Arbeitsverzeichnis: $Pwd"
 
+$StartZeit = Get-Date
+
 #---------------------------------# 
 # Anlegen des Moduls              # 
 #---------------------------------# 
@@ -14,11 +16,11 @@ Write-Host "Ein neues Modulmanifest wird angelegt"
 $ModuleParentPath = Split-Path -Path $Pwd
 $ModulePath = $Pwd
 
-Write-Host "$ModuleParentPath wird an die PSModulePath-Variablen angehaengt"
+Write-Host "$ModulePath wird an die PSModulePath-Variablen angehaengt"
 $env:PSModulePath += ";$ModulePath"
 
 # Nur zu Testzwecken
-Write-Host ((Get-ChildItem -Path $ModuleParentPath -Recurse).DirectoryName -join ",")
+Write-Host ((Get-ChildItem -Path $ModuleParentPath -Recurse).FullName -join ",")
 
 # Versionsverzeichnis anhängen
 $ModulePath = Join-Path -Path $ModulePath -ChildPath $env:ModuleVersion
@@ -40,6 +42,8 @@ New-ModuleManifest -Path $Psd1Path -Author "P. Monadjemi" `
  -ModuleVersion 1.0 `
  -NestedModules $Psm1Name
 
+Write-Host "Die Modulmanifestdatei $Psd1Path wurde neu erstellt."
+
 # Optional: Festlegen der zu exportierenden Functions
 
 # Warnung: So kompliziert muss man es nicht machen (auf der anderen Seite ist es nicht wirklich kompliziert, sondern eigentlich ganz naheliegend;)
@@ -48,7 +52,7 @@ $FuncListe = [Scriptblock]::Create((Get-Content $Psm1Path -Raw )).Ast.FindAll({p
 # Psd1-Datei aktualisieren
 Update-ModuleManifest -Path $Psd1Path -FunctionsToExport $FuncListe 
 
-Write-Host "$ModuleManifestPath wurde aktualisiert..."
+Write-Host "Die Modulmanifestdatei $Psd1Path wurde aktualisiert..."
 
 # Replace Version number in Manifest
 # $ModuleManifest     = Get-Content -Path $ModuleManifestPath -Raw
@@ -118,3 +122,5 @@ $ApiKey = "d1aa07e8-d006-410a-b040-acf131460a2f"
 
 # Jetzt das Modul veroeffentlichen
 Publish-Module -Name $env:ModuleName -NuGetApiKey $ApiKey -Repository PoshRepo
+
+Write-Host "Autrag ausgeführt in {0:n2}s" -f ((Get-Date)-$StartZeit).TotalSeconds
