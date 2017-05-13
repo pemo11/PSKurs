@@ -12,14 +12,18 @@ Write-Host "Aktuelles Arbeitsverzeichnis: $Pwd"
 Write-Host "Ein neues Modulmanifest wird angelegt"
 
 $ModuleParentPath = Split-Path -Path $Pwd
+$ModulePath = $Pwd
 
 Write-Host "$ModuleParentPath wird an die PSModulePath-Variablen angehaengt"
-$env:PSModulePath += ";$ModuleParentPath"
+$env:PSModulePath += ";$ModulePath"
 
 # Nur zu Testzwecken
-Get-ChildItem -Path $ModuleParentPath -Recurse
+Write-Host ((Get-ChildItem -Path $ModuleParentPath -Recurse).DirectoryName -join ",")
 
+# Versionsverzeichnis anhängen
 $ModulePath = Join-Path -Path $ModulePath -ChildPath $env:ModuleVersion
+
+# Pfade für die Psm1- und die Psd1-Datei bilden
 $Psm1Name = $env:ModuleName + ".psm1"
 $Psd1Name = $env:ModuleName + ".psd1"
 $Psm1Path = Join-Path -Path $ModulePath -ChildPath $Psm1Name
@@ -29,7 +33,7 @@ $Psd1Path = Join-Path -Path $ModulePath -ChildPath $Psd1Name
 
 # $env:APPVEYOR_BUILD_VERSION sollte fur die Modulversion nicht verwendet werden
 
-New-ModuleManifest -Path $ModuleManifestPath -Author "P. Monadjemi" `
+New-ModuleManifest -Path $Psd1Path -Author "P. Monadjemi" `
  -Description "Functions und Beispiele fuer meine PowerShell-Schulungen" `
  -Copyright "Free as in free beer" `
  -Guid "36969b0a-09fc-4f5f-a879-025d455416b8" `
