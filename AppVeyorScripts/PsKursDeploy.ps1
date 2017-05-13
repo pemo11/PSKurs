@@ -24,7 +24,7 @@ $Psm1Path = Join-Path -Path $ModulePath -ChildPath $Psm1Name
 # Psd1-Datei wird neu angelegt
 $ModuleManifestPath = Join-Path -Path $ModulePath -ChildPath $Psd1Name
 
-# $env:APPVEYOR_BUILD_VERSION sollte f�r die Modulversion nicht verwendet werden
+# $env:APPVEYOR_BUILD_VERSION sollte fur die Modulversion nicht verwendet werden
 
 New-ModuleManifest -Path $ModuleManifestPath -Author "P. Monadjemi" `
  -Description "Functions und Beispiele fuer meine PowerShell-Schulungen" `

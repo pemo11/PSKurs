@@ -18,11 +18,11 @@ describe "General Tests" {
     }
 
     it "should return more than 1 Program File-Entry" {
-        (Info-LocalProgramfile).Count -gt 0 | Should be $true
+        (Get-LocalProgramfile).Count -gt 0 | Should be $true
     }
 
     it "should return more than 1 Uninstall-Entry" {
-        (Info-UnInstallProg).Count -gt 0 | Should be $true
+        (Get-UnInstallProg).Count -gt 0 | Should be $true
     }
 
     it "ScriptAnalyzer should give no errors" {

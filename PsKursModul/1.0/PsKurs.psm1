@@ -47,7 +47,7 @@ function Out-Voice
  .Synopsis
  Gibt die Exe-Dateien der Programme-Verzeichnisse zur?ck
 #>
-function Info-Programfile
+function Get-LocalProgramfile
 {
   [CmdletBinding()]
   param()
@@ -65,7 +65,7 @@ Set-Alias -Name iprogfi -Value Info-ProgrammFile
  .Synopsis
  Gibt die Eckdaten der Uninstall-Eintraege zurueck
 #>
-function Info-UninstallProg
+function Get-UninstallProg
 {
    [CmdletBinding()]
    param()
@@ -87,7 +87,7 @@ Set-Alias -Name unappkey -Value Info-UninstallProg
  .Synopsis
  Gibt die installierten .NET-Versionen aus
 #>
-function Info-NetVersion
+function Get-NetVersion
 {
   [CmdletBinding()]
   param([Parameter(ParametersetName="Version", Mandatory=$true, Position=0)][String]$Version,
