@@ -36,7 +36,7 @@ Write-Host "*** Alle Tests wurden bestanden! ***" -ForegroundColor Green
 #-----------------------------------------------------# 
 
 $ModulName = $env:ModuleName
-$Psm1Pfad = "./PsKursModul/$($env:ModuleVersion)/$ModulName.psm1"
+$Psm1Pfad = "./$($env:ModuleVersion)/$ModulName.psm1"
 
 $Result = Invoke-ScriptAnalyzer -Path $Psm1Pfad | Group-Object Severity 
 

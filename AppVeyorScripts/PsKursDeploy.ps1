@@ -16,14 +16,16 @@ $ModuleParentPath = Split-Path -Path $Pwd
 Write-Host "$ModuleParentPath wird an die PSModulePath-Variablen angehaengt"
 $env:PSModulePath += ";$ModuleParentPath"
 
-$ModulePath = Join-Path -Path $Pwd -ChildPath "PsKursModul"
+# Nur zu Testzwecken
+Get-ChildItem -Path $ModuleParentPath -Recurse
+
 $ModulePath = Join-Path -Path $ModulePath -ChildPath $env:ModuleVersion
 $Psm1Name = $env:ModuleName + ".psm1"
 $Psd1Name = $env:ModuleName + ".psd1"
 $Psm1Path = Join-Path -Path $ModulePath -ChildPath $Psm1Name
 
 # Psd1-Datei wird neu angelegt
-$ModuleManifestPath = Join-Path -Path $ModulePath -ChildPath $Psd1Name
+$Psd1Path = Join-Path -Path $ModulePath -ChildPath $Psd1Name
 
 # $env:APPVEYOR_BUILD_VERSION sollte fur die Modulversion nicht verwendet werden
 
@@ -40,7 +42,7 @@ New-ModuleManifest -Path $ModuleManifestPath -Author "P. Monadjemi" `
 $FuncListe = [Scriptblock]::Create((Get-Content $Psm1Path -Raw )).Ast.FindAll({param($Ast) $Ast -is [System.Management.Automation.Language.FunctionDefinitionAst]}, $true).Name -join ","
 
 # Psd1-Datei aktualisieren
-Update-ModuleManifest -Path $ModuleManifestPath -FunctionsToExport $FuncListe 
+Update-ModuleManifest -Path $Psd1Path -FunctionsToExport $FuncListe 
 
 Write-Host "$ModuleManifestPath wurde aktualisiert..."
 

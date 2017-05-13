@@ -8,7 +8,7 @@ describe "Allgemeine Tests" {
     beforeAll {
         cd $PSScriptRoot
         $ModulName = $env:ModuleName
-        $Psm1Pfad = "./PsKursModul/$($env:ModuleVersion)/$ModulName.psm1"
+        $Psm1Pfad = "./$($env:ModuleVersion)/$ModulName.psm1"
         # Laden der Psm1-Datei mit den zu testenden Functions
         Import-Module $Psm1Pfad -PassThru -Force -DisableNameChecking
     }
