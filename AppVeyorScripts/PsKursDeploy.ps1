@@ -124,4 +124,4 @@ $ApiKey = "d1aa07e8-d006-410a-b040-acf131460a2f"
 Publish-Module -Name $env:ModuleName -NuGetApiKey $ApiKey -Repository PoshRepo
 
 # Abschlussmeldung ausgeben
-Write-Host ("Autrag ausgeführt in {0:n2}s" -f ((Get-Date)-$StartZeit).TotalSeconds)
+Write-Host ("Autrag ausgefuehrt in {0:n2}s" -f ((Get-Date)-$StartZeit).TotalSeconds)

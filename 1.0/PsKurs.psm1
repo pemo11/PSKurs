@@ -6,6 +6,9 @@
  publish-module -Name PsKurs -Repository PoshRepo -NuGetApiKey d1aa07e8-d006-410a-b040-acf131460a2f
 #>
 
+# Alle Skripts dot-sourced laden
+.$PSScriptRoot\Scripts\OutChart.ps1
+
 <#
  .Synopsis
  Runden einer Zahl
