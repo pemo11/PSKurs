@@ -48,3 +48,28 @@ describe "Allgemeine Tests" {
     } 
 
 }
+
+describe "Chart-Modul Tests" {
+
+    beforeAll {
+        cd $PSScriptRoot
+        $Ps1Pfad = "./$($env:ModuleVersion)/Scripts/OutChart.ps1"
+        # Laden der Ps1-Datei mit drn zu testenden Function Out-Chart
+        .$Ps1Pfad
+    }
+
+    it "Erzeugt Png-Datei" {
+        $PngPfad = Join-Path -Path $env:temp -ChildPath "Chart1.png"
+        $Daten = Get-Service | Group-Object -Property Status
+        Out-Chart -FilePath $PngPfad `
+          -ChartTitle "Test" `
+          -XAxisTitle "X-Achse" `
+          -YAxisTitle "Y-Achse" `
+          -DataSource $Daten `
+          -XAxisProperty "Name" `
+          -Property1ScaleFactor 1 `
+          -Property1 "Count"
+        Test-Path -Path $PngPfad | Should be $true
+    } 
+
+}

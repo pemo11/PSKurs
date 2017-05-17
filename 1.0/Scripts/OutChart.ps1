@@ -53,7 +53,7 @@ function Out-Chart
         [void]$Chart1.Series[$Property1].Points.AddXY($_.$XAxisProperty, ($_.$Property1 / $Property1ScaleFactor))
     }
 
-    if ($Property2 -ne $null)
+    if ($PSBoundParameters.ContainsKey("Property2"))
     {
         [void]$chart1.Series.Add($Property2)
         $Chart1.Series[$Property2].ChartType = "Column"
