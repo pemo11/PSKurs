@@ -6,7 +6,7 @@
 function Out-Chart
 {
     [CmdletBinding()]
-    param([String]$FileName,
+    param([String]$FilePath,
           [String]$ChartTitle,
           [String]$XAxisTitle,
           [String]$YAxisTitle,
@@ -67,6 +67,6 @@ function Out-Chart
         }
     }
     
-    $PngPath = Join-Path -Path $PSScriptRoot -ChildPath $FileName
+    $PngPath = Join-Path -Path $PSScriptRoot -ChildPath $FilePath
     $Chart1.SaveImage($PngPath, "png") 
 }
