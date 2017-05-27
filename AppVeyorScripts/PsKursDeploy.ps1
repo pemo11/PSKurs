@@ -39,7 +39,7 @@ New-ModuleManifest -Path $Psd1Path -Author "P. Monadjemi" `
  -Description "Functions und Beispiele fuer meine PowerShell-Schulungen" `
  -Copyright "Free as in free beer" `
  -Guid "36969b0a-09fc-4f5f-a879-025d455416b8" `
- -ModuleVersion 1.0 `
+ -ModuleVersion $env:ModuleVersion `
  -NestedModules $Psm1Name
 
 Write-Host "Die Modulmanifestdatei $Psd1Path wurde neu erstellt."
