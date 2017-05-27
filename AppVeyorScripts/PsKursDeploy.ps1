@@ -54,7 +54,7 @@ $Psd1Content = @"
 "@
 
 # Psd1-Datei schreiben
-Set-Content -Path $Psd1Path -Value $Psd1Content
+Set-Content -Path $Psd1Path -Value $Psd1Content -Encoding Default
 
 Write-Host "Die Modulmanifestdatei $Psd1Path wurde erstellt."
 
