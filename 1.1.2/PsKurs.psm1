@@ -93,16 +93,25 @@ function IsInstalled
 {
   [CmdletBinding()]
   param([Parameter(Mandatory=$true)][String]$AppName,
-        [String]$Version)
+        [String]$Version,
+        [Switch]$ShowApps)
   if (!$PSBoundParameters.ContainsKey("Version"))
   {
-    $Result = $null -ne (Get-UninstallApp | Where-Object DisplayName -match $AppName)
+    $Apps = Get-UninstallApp | Where-Object DisplayName -match $AppName
+
   }
   else
   {
-    $Result = $null -ne (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version })
+    return $Apps -ne $null
   }
-  Return $Result
+  if ($Apps -ne $null -and $ShowApps)
+  {
+    return $Apps
+  }
+  else
+  {
+    return $Apps -ne $null
+  }
 }
 
 <#
