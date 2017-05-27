@@ -71,5 +71,5 @@ describe "Chart-Modul Tests" {
           -Property1 "Count"
         Test-Path -Path $PngPfad | Should be $true
     } 
-
+   
 }

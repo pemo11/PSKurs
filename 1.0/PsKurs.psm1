@@ -48,7 +48,7 @@ function Out-Voice
 
 <#
  .Synopsis
- Gibt die Exe-Dateien der Programme-Verzeichnisse zur?ck
+ Gibt die Exe-Dateien der Programme-Verzeichnisse zurueck
 #>
 function Get-LocalProgramfile
 {
@@ -68,7 +68,7 @@ Set-Alias -Name iprogfi -Value Info-ProgrammFile
  .Synopsis
  Gibt die Eckdaten der Uninstall-Eintraege zurueck
 #>
-function Get-UninstallProg
+function Get-UninstallApp
 {
    [CmdletBinding()]
    param()
@@ -79,12 +79,31 @@ function Get-UninstallProg
    $HKLMUninstall64, $HKCUUinstall64, $HKLMUninstall32, $HKCUUinstall32 | ForEach-Object {
    if (Test-Path $_) 
    {
-     Get-ItemProperty -Path $_\* | Select-Object -Property DisplayName, InstallLocation | Where-Object InstallLocation | Sort-Object Displayname
+     Get-ItemProperty -Path $_\* | Select-Object -Property DisplayName, DisplayVersion, InstallLocation | Where-Object InstallLocation | Sort-Object Displayname
    } 
   }
 }
+Set-Alias -Name GetApps -Value Get-UninstallApp
 
-Set-Alias -Name unappkey -Value Info-UninstallProg
+<#
+ .Synopsis
+ Gibt an, ob eine Anwendung installiert ist
+#>
+function IsInstalled
+{
+  [CmdletBinding()]
+  param([Parameter(Mandatory=$true)][String]$AppName,
+        [String]$Version)
+  if (!$PSBoundParameters.ContainsKey("Version"))
+  {
+    $Result = (Get-UninstallApp | Where-Object DisplayName -match $AppName) -ne $null
+  }
+  else
+  {
+    $Result = (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version }) -ne $null
+  }
+  Return $Result
+}
 
 <#
  .Synopsis
