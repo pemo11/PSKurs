@@ -100,7 +100,7 @@ function IsInstalled
   }
   else
   {
-    $Result = $null - (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version })
+    $Result = $null -ne (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version })
   }
   Return $Result
 }
