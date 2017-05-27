@@ -131,3 +131,5 @@ function Get-NetVersion
     @($Result).Count -gt 0
   }
 }
+
+Export-ModuleMember -Function * -Alias *
