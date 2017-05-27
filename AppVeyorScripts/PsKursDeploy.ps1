@@ -35,24 +35,32 @@ $Psd1Path = Join-Path -Path $ModulePath -ChildPath $Psd1Name
 
 # $env:APPVEYOR_BUILD_VERSION sollte fur die Modulversion nicht verwendet werden
 
-New-ModuleManifest -Path $Psd1Path -Author "P. Monadjemi" `
- -Description "Functions und Beispiele fuer meine PowerShell-Schulungen" `
- -Copyright "Free as in free beer" `
- -Guid "36969b0a-09fc-4f5f-a879-025d455416b8" `
- -ModuleVersion $env:ModuleVersion `
- -NestedModules $Psm1Name
+# Warnung: So kompliziert muss man es nicht machen (auf der anderen Seite ist es nicht wirklich kompliziert, sondern eigentlich ganz naheliegend;)
 
-Write-Host "Die Modulmanifestdatei $Psd1Path wurde neu erstellt."
+$FuncNamen = [Scriptblock]::Create((Get-Content $Psm1Path -Raw )).Ast.FindAll({param($Ast) $Ast -is [System.Management.Automation.Language.FunctionDefinitionAst]}, $true).Name
+$FuncNamen = ($FuncNamen -replace "([\w-]+)*", '"$1') -join ","
+
+$Psd1Content = @"
+@{
+ Author = "P. Monadjemi"
+ Description = "Functions und Beispiele fuer meine PowerShell-Schulungen" 
+ Copyright = "Always free as in free beer" 
+ Guid = "36969b0a-09fc-4f5f-a879-025d455416b8" 
+ ModuleVersion = "$($env:ModuleVersion)"
+ NestedModules = @('$Psm1Name')
+ FunctionsToExport = @($FuncNamen)
+ AliasesToExport = @()
+}
+"@
+
+# Psd1-Datei schreiben
+Set-Content -Path $Psd1Path -Value $Psd1Content
+
+Write-Host "Die Modulmanifestdatei $Psd1Path wurde erstellt."
 
 # Optional: Festlegen der zu exportierenden Functions
 
-# Warnung: So kompliziert muss man es nicht machen (auf der anderen Seite ist es nicht wirklich kompliziert, sondern eigentlich ganz naheliegend;)
-$FuncListe = [Scriptblock]::Create((Get-Content $Psm1Path -Raw )).Ast.FindAll({param($Ast) $Ast -is [System.Management.Automation.Language.FunctionDefinitionAst]}, $true).Name -join ","
 
-# Psd1-Datei aktualisieren
-Update-ModuleManifest -Path $Psd1Path -FunctionsToExport $FuncListe 
-
-Write-Host "Die Modulmanifestdatei $Psd1Path wurde aktualisiert..."
 
 # Replace Version number in Manifest
 # $ModuleManifest     = Get-Content -Path $ModuleManifestPath -Raw
