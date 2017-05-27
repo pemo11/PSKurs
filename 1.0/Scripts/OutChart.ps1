@@ -67,6 +67,16 @@ function Out-Chart
         }
     }
     
-    $PngPath = Join-Path -Path $PSScriptRoot -ChildPath $FilePath
-    $Chart1.SaveImage($PngPath, "png") 
+    $Chart1.SaveImage($FilePath, "png") 
 }
+
+$PngPfad = Join-Path -Path $env:temp -ChildPath "Chart1.png"
+        $Daten = Get-Service | Group-Object -Property Status
+        Out-Chart -FilePath $PngPfad `
+          -ChartTitle "Test" `
+          -XAxisTitle "X-Achse" `
+          -YAxisTitle "Y-Achse" `
+          -DataSource $Daten `
+          -XAxisProperty "Name" `
+          -Property1ScaleFactor 1 `
+          -Property1 "Count"
