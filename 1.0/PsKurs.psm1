@@ -96,11 +96,11 @@ function IsInstalled
         [String]$Version)
   if (!$PSBoundParameters.ContainsKey("Version"))
   {
-    $Result = (Get-UninstallApp | Where-Object DisplayName -match $AppName) -ne $null
+    $Result = $null -ne (Get-UninstallApp | Where-Object DisplayName -match $AppName)
   }
   else
   {
-    $Result = (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version }) -ne $null
+    $Result = $null - (Get-UninstallApp | Where-Object { $_.DisplayName -match $AppName -and $_.DisplayVersion -eq $Version })
   }
   Return $Result
 }

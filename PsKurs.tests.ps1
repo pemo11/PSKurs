@@ -22,19 +22,19 @@ describe "Allgemeine Tests" {
     }
 
     it "should return more than 1 Uninstall-Entry" {
-        (Get-UnInstallProg).Count -gt 0 | Should be $true
+        (Get-UninstallApp).Count -gt 0 | Should be $true
     }
 
     it "ScriptAnalyzer should give no errors" {
         Import-Module PSScriptAnalyzer
-        $RuleVioalations = Invoke-ScriptAnalyzer -Path $Psm1Pfad -ExcludeRule "PSUseApprovedVerbs"
-        @($RuleVioalations | Where-Object Severity -eq "Error").Count | Should be 0
+        $RuleViolations = Invoke-ScriptAnalyzer -Path $Psm1Pfad -ExcludeRule "PSUseApprovedVerbs"
+        @($RuleViolations | Where-Object Severity -eq "Error").Count | Should be 0
     }
 
     it "ScriptAnalyzer should give less than 3 warnings" {
         Import-Module PSScriptAnalyzer
-        $RuleVioalations = Invoke-ScriptAnalyzer -Path $Psm1Pfad -ExcludeRule "PSUseApprovedVerbs"
-        @($RuleVioalations | Where-Object Severity -eq "Warning").Count -lt 3 | Should be $true
+        $RuleViolations = Invoke-ScriptAnalyzer -Path $Psm1Pfad -ExcludeRule "PSUseApprovedVerbs"
+        @($RuleViolations | Where-Object Severity -eq "Warning").Count -lt 3 | Should be $true
     }
 
     it "Runden auf 3 Nachkommastellen" {
